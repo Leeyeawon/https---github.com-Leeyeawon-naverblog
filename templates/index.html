@@ -2,69 +2,52 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>네이버 맛집 블로그 검색</title>
+    <title>통합 서비스 메인 메뉴</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .search-container { text-align: center; margin-bottom: 30px; }
-        .search-form { display: flex; justify-content: center; align-items: center; }
-        .search-input { 
-            width: 400px; 
-            padding: 10px 15px; 
-            border: 2px solid #1DB85C; /* 네이버 대표 색상 계열 */
-            border-radius: 20px 0 0 20px; 
-            font-size: 16px; 
-            outline: none;
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .menu-container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        h1 { color: #1DB85C; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
+        .menu-list { list-style: none; padding: 0; }
+        .menu-item { margin-bottom: 15px; }
+        .menu-item a {
+            display: block;
+            padding: 15px 20px;
+            background-color: #e8f5e9; /* 네이버/플라스크 느낌의 부드러운 배경 */
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            border: 1px solid #c8e6c9;
         }
-        .search-button {
-            padding: 10px 20px;
+        .menu-item a:hover {
             background-color: #1DB85C;
             color: white;
-            border: 2px solid #1DB85C;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(29, 184, 92, 0.3);
         }
-        .result-list { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            list-style: none; 
-            padding: 0; 
-        }
-        .result-item { 
-            border: 1px solid #eee; 
-            padding: 15px; 
-            margin-bottom: 10px; 
-            border-radius: 5px; 
-        }
-        .result-item h3 { margin-top: 0; font-size: 18px; color: #0000FF; /* 네이버 링크색상 */ }
-        .result-item p { font-size: 14px; color: #333; }
-        .result-item a { text-decoration: none; }
-        .result-item span { display: block; font-size: 12px; color: #777; margin-top: 5px; }
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <h1>🍽️ 맛집 블로그 검색</h1>
-        <a href="/ranking" style="text-decoration: none; color: #1DB85C; font-weight: bold; display: block; margin-bottom: 10px;">
-    📊 인기 검색어 순위 보기
-        </a>
-        <form class="search-form" method="POST" action="/blog">
-            <input class="search-input" type="text" name="query" placeholder="검색어를 입력하세요 (예: 강남 맛집)">
-            <button class="search-button" type="submit">검색</button>
-        </form>
+    <div class="menu-container">
+        <h1>🚀 통합 웹 서비스 메뉴</h1>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="/search_blog">🍽️ 네이버 맛집 블로그 검색</a>
+            </li>
+            <li class="menu-item">
+                <a href="/ranking">📊 맛집 검색어 순위</a>
+            </li>
+            <li class="menu-item">
+                <a href="/melon_chart">🎶 멜론 실시간 차트 보기</a>
+            </li>
+            <li class="menu-item">
+                <a href="/search_artist">🎤 멜론 DB 가수 검색</a>
+            </li>
+            <li class="menu-item">
+                <a href="/artist_rank">👑 차트 점령 가수 랭킹 (곡 수)</a>
+            </li>
+        </ul>
+        <p style="margin-top: 30px; font-size: 14px; color: #777;">AI응용빅데이터 프로그램 - 도라에몽</p>
     </div>
-
-    {% if search_results %}
-    <ul class="result-list">
-        {% for item in search_results %}
-        <li class="result-item">
-            <h3><a href="{{ item.link }}" target="_blank">{{ item.title | safe }}</a></h3>
-            <p>{{ item.description | safe }}</p>
-            <span>블로그명: {{ item.bloggername }} | 작성일: {{ item.postdate }}</span>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 </body>
 </html>
