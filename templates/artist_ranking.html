@@ -1,67 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>멜론 차트 가수별 랭킹</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-        h1 { color: #FF0050; margin-bottom: 30px; }
-        
-        .ranking-table {
-            width: 60%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        .ranking-table th, .ranking-table td {
-            border: 1px solid #eee;
-            padding: 12px;
-            text-align: center;
-        }
-        .ranking-table th {
-            background-color: #fce4ec;
-            color: #FF0050;
-        }
-        .ranking-table tr:nth-child(even) { background-color: #f9f9f9; }
-        .ranking-table td.rank { font-weight: bold; }
-        .ranking-table td.artist { text-align: left; }
-        
-        .go-back {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 15px;
-            background-color: #f0f0f0;
-            text-decoration: none;
-            color: #333;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <h1>👑 멜론 차트 가수별 노래 갯수 랭킹</h1>
+{% extends "base.html" %}
+{% block title %}가수 랭킹{% endblock %}
+{% block content %}
+  <h1 style="margin:0 0 12px; font-size:22px;">가수별 곡 수 TOP10</h1>
 
-    {% if artist_ranking %}
-    <table class="ranking-table">
-        <thead>
-            <tr>
-                <th>순위</th>
-                <th>가수명</th>
-                <th>차트 진입 곡 수</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in artist_ranking %}
-            <tr>
-                <td class="rank">{{ loop.index }}위</td>
-                <td class="artist">{{ item.artist }}</td>
-                <td>{{ item.song_count }}개</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>가수별 랭킹 데이터를 찾을 수 없습니다. 멜론 차트 데이터를 먼저 저장해 주세요.</p>
-    {% endif %}
-
-    <a href="/" class="go-back">메인 페이지로 돌아가기</a>
-</body>
-</html>
+  {% if top_artists and top_artists|length > 0 %}
+    <ol style="margin:0; padding-left:18px;">
+      {% for row in top_artists %}
+        <li style="margin:10px 0;">
+          <b>{{ row["artist"] }}</b>
+          <span style="color:#666;">({{ row["song_count"] }}곡)</span>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p style="color:#666;">차트 DB가 비어있어요. 업데이트부터 해주세요.</p>
+  {% endif %}
+{% endblock %}

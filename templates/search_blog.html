@@ -1,70 +1,36 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>네이버 맛집 블로그 검색</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .search-container { text-align: center; margin-bottom: 30px; }
-        .search-form { display: flex; justify-content: center; align-items: center; }
-        .search-input { 
-            width: 400px; 
-            padding: 10px 15px; 
-            border: 2px solid #1DB85C; /* 네이버 대표 색상 계열 */
-            border-radius: 20px 0 0 20px; 
-            font-size: 16px; 
-            outline: none;
-        }
-        .search-button {
-            padding: 10px 20px;
-            background-color: #1DB85C;
-            color: white;
-            border: 2px solid #1DB85C;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .result-list { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            list-style: none; 
-            padding: 0; 
-        }
-        .result-item { 
-            border: 1px solid #eee; 
-            padding: 15px; 
-            margin-bottom: 10px; 
-            border-radius: 5px; 
-        }
-        .result-item h3 { margin-top: 0; font-size: 18px; color: #0000FF; /* 네이버 링크색상 */ }
-        .result-item p { font-size: 14px; color: #333; }
-        .result-item a { text-decoration: none; }
-        .result-item span { display: block; font-size: 12px; color: #777; margin-top: 5px; }
-    </style>
-</head>
-<body>
-    <div class="search-container">
-        <h1>🍽️ 맛집 블로그 검색</h1>
-        <a href="/ranking" style="text-decoration: none; color: #1DB85C; font-weight: bold; display: block; margin-bottom: 10px;">
-    📊 인기 검색어 순위 보기
-        </a>
-        <form class="search-form" method="POST" action="/search_blog">
-            <input class="search-input" type="text" name="query" placeholder="검색어를 입력하세요 (예: 강남 맛집)">
-            <button class="search-button" type="submit">검색</button>
-        </form>
-    </div>
+{% extends "base.html" %}
+{% block title %}블로그 검색{% endblock %}
+{% block content %}
+  <h1 style="margin:0 0 12px; font-size:22px;">블로그 검색</h1>
 
-    {% if search_results %}
-    <ul class="result-list">
-        {% for item in search_results %}
-        <li class="result-item">
-            <h3><a href="{{ item.link }}" target="_blank">{{ item.title | safe }}</a></h3>
-            <p>{{ item.description | safe }}</p>
-            <span>블로그명: {{ item.bloggername }} | 작성일: {{ item.postdate }}</span>
+  <form method="get" action="/blog" style="display:flex; gap:8px; margin:12px 0;">
+    <input name="query" value="{{ query }}" placeholder="예: 부산 맛집, 해운대 카페"
+           style="flex:1; padding:10px 12px; border:1px solid #eee; border-radius:8px; font-size:14px;">
+    <button type="submit"
+            style="padding:10px 12px; border:1px solid #eee; border-radius:8px; background:#fff; cursor:pointer;">
+      검색
+    </button>
+  </form>
+
+  {% if error %}
+    <p style="color:#b00020; margin:8px 0 0;">{{ error }}</p>
+  {% endif %}
+
+  {% if results and results|length > 0 %}
+    <ul style="list-style:none; padding:0; margin:14px 0;">
+      {% for item in results %}
+        <li style="border-top:1px solid #eee; padding:12px 0;">
+          <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer"
+             style="font-weight:700; text-decoration:none; color:#111;">
+            {{ item.title|safe }}
+          </a>
+          <div style="margin-top:6px; color:#666; font-size:14px;">
+            {{ item.description|safe }}
+          </div>
         </li>
-        {% endfor %}
+      {% endfor %}
     </ul>
-    {% endif %}
-</body>
-</html>
+  {% elif query %}
+    <p style="color:#666;">검색 결과가 없어요.</p>
+  {% endif %}
+{% endblock %}

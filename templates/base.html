@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}HELLO{% endblock %}</title>
+</head>
+<body style="margin:0; font-family:system-ui,-apple-system,'Noto Sans KR',sans-serif; color:#111; background:#fff;">
+  <div style="border-bottom:1px solid #eee; position:sticky; top:0; background:#fff;">
+    <div style="max-width:860px; margin:0 auto; padding:14px 16px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+      <a href="/" style="font-weight:800; text-decoration:none; color:#111;">HELLO</a>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="/blog" style="text-decoration:none; color:#666; font-size:14px;">블로그</a>
+        <a href="/ranking" style="text-decoration:none; color:#666; font-size:14px;">랭킹</a>
+        <a href="/melon-chart" style="text-decoration:none; color:#666; font-size:14px;">멜론</a>
+        <a href="/artist-search" style="text-decoration:none; color:#666; font-size:14px;">가수검색</a>
+        <a href="/artist-ranking" style="text-decoration:none; color:#666; font-size:14px;">가수랭킹</a>
+      </div>
+    </div>
+  </div>
+
+  <main style="max-width:860px; margin:0 auto; padding:18px 16px;">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div style="border-top:1px solid #eee; margin-top:24px;">
+    <div style="max-width:860px; margin:0 auto; padding:14px 16px; color:#888; font-size:12px;">
+      © HELLO
+    </div>
+  </div>
+</body>
+</html>
